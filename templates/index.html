@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Tone AI</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+<div class="background-shapes"></div>
+
+<div class="main-wrapper">
+    <div class="glass-card">
+        <header>
+            <div class="logo-area">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <h1>Tone<span>Craft</span></h1>
+            </div>
+            <p class="subtitle">Refine your message with AI-powered tone analysis.</p>
+        </header>
+
+        <form method="POST" class="input-section">
+            {% csrf_token %}
+            <div class="textarea-wrapper">
+                <textarea name="sentence" placeholder="Type your email or sentence here..." required>{{ sentence }}</textarea>
+                <div class="focus-border"></div>
+            </div>
+            <button type="submit" class="analyze-btn">
+                <span>Analyze & Rewrite</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </form>
+
+        {% if detected %}
+        <div class="results-section">
+            <div class="tone-badge">
+                <span class="label">Current Tone:</span>
+                <span class="value">{{ detected }}</span>
+            </div>
+
+            <div class="suggestions-grid">
+                {% for tone, options in suggestions.items %}
+                    <div class="tone-category">
+                        <h3><i class="fa-regular fa-circle-check"></i> {{ tone|title }} Options</h3>
+                        <div class="options-list">
+                            {% for opt in options %}
+                                <div class="option-card" onclick="copyText(this, '{{ opt|escapejs }}')">
+                                    <p>{{ opt }}</p>
+                                    <span class="copy-icon"><i class="fa-regular fa-copy"></i> Copy</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Custom Toast Notification -->
+<div id="toast" class="toast hidden">
+    <i class="fa-solid fa-check-circle"></i> Text copied to clipboard!
+</div>
+
+<script>
+    function copyText(element, text) {
+        navigator.clipboard.writeText(text).then(() => {
+            showToast();
+            
+            // Optional: Visual feedback on the card itself
+            const originalIcon = element.querySelector('.copy-icon').innerHTML;
+            element.querySelector('.copy-icon').innerHTML = '<i class="fa-solid fa-check"></i> Copied';
+            element.style.borderColor = '#10b981';
+            element.style.background = '#ecfdf5';
+            
+            setTimeout(() => {
+                element.querySelector('.copy-icon').innerHTML = originalIcon;
+                element.style.borderColor = '';
+                element.style.background = '';
+            }, 2000);
+        });
+    }
+
+    function showToast() {
+        const toast = document.getElementById("toast");
+        toast.classList.remove("hidden");
+        toast.classList.add("show");
+        
+        setTimeout(() => {
+            toast.classList.remove("show");
+            setTimeout(() => { toast.classList.add("hidden"); }, 300);
+        }, 3000);
+    }
+</script>
+
+</body>
+</html>
