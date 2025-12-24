@@ -2,7 +2,7 @@
 
 <p align="center">
   ToneCraft is an NLP-based application that analyzes and corrects the tone of emails.<br>
-  Built using <b>Python</b>, <b>Scikit-learn</b>, and <b>NLP techniques</b>, it classifies email tone and rewrites messages into polite and professional versions.
+  Built using <b>Python</b>, <b>Django</b>, <b>Scikit-learn</b>, and <b>NLP techniques</b>, it classifies email tone and rewrites messages into polite and professional versions.
 </p>
 
 ---
@@ -20,31 +20,29 @@
 ### ✍️ Tone Correction
 - Automatically rewrites emails into **polite and professional** versions  
 
-### 🖥️ Interactive Frontend
-- Built using **Streamlit**
-- Real-time tone detection and rewriting  
+### 🖥️ Web-Based Frontend
+- Built using **Django**, **HTML**, and **CSS**
+- Clean and simple user interface for email input and results  
 
 ---
 
 ## 🛠️ Tech Stack
 
-| **Layer**    | **Technology**            |
-|-------------|----------------------------|
-| **Frontend** | Streamlit                  |
-| **Backend**  | Python                     |
-| **ML Model** | Suport Vector Machine(95.8)|
-| **NLP**      | TF-IDF, NLTK               |
-| **Libraries**| Scikit-learn, Pandas       |
+| **Layer**        | **Technology**                    |
+|------------------|------------------------------------|
+| **Frontend**     | HTML5, CSS3                        |
+| **Backend**      | Django, Python                     |
+| **ML Model**     | Support Vector Machine(95.8)       |
+| **NLP**          | TF-IDF, NLTK                       |
+| **Libraries**    | Scikit-learn, Pandas               |
 
 ---
 
 ## 📸 Application Preview
 
 <p align="center">
-  <img src="screenshots/frontend.png" width="600" alt="ToneCraft Frontend"/>
+  <img src="https://github.com/Adithya151/ToneCraft/blob/main/Screenshot%202025-12-24%20200534.png" width="600" alt="AutoCleanX Dashboard"/>
 </p>
-
-> 📌 Add your Streamlit UI screenshot inside a `screenshots/` folder and name it `frontend.png`.
 
 ---
 
@@ -58,23 +56,24 @@
 
 ---
 
-## 🎯 Use Cases
-
-- Improving professional email communication  
-- Corporate and HR email drafting  
-- Academic and NLP learning projects  
-- Soft skills and workplace communication enhancement  
-
----
-
 ## 📂 Folder Structure
 
 ```bash
 ToneCraft/
-├── app.py
+├── manage.py
+├── tonecraft/
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── app/
+│   ├── templates/
+│   │   └── index.html
+│   ├── static/
+│   │   └── style.css
+│   ├── views.py
+│   └── preprocessing.py
 ├── model/
 │   ├── tone_classifier.pkl
 │   └── vectorizer.pkl
-├── preprocessing.py
 ├── requirements.txt
 └── README.md
